@@ -1,7 +1,7 @@
 JudgeMan::Application.routes.draw do
-  resources :submits, :only => [:new, :create]
-
-  resources :judges, :only => [:new, :create, :show]
+  resources :judges, :only => [:new, :create, :show] do
+    resources :submits, :only => [:new, :create]
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

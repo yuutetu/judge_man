@@ -14,6 +14,7 @@ class SubmitsController < ApplicationController
 
   # GET /submits/new
   def new
+    @judge = Judge.find(params[:judge_id])
     @submit = Submit.new
   end
 

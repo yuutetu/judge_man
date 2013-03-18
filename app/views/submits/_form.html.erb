@@ -1,4 +1,4 @@
-<%= form_for(@submit) do |f| %>
+<%= form_for @submit, :url => judge_submits_path(@judge) do |f| %>
   <% if @submit.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@submit.errors.count, "error") %> prohibited this submit from being saved:</h2>
@@ -14,10 +14,6 @@
   <div class="field">
     <%= f.label :select_item %><br />
     <%= f.text_field :select_item %>
-  </div>
-  <div class="field">
-    <%= f.label :judge %><br />
-    <%= f.text_field :judge %>
   </div>
   <div class="actions">
     <%= f.submit %>

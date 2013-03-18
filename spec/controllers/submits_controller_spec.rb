@@ -36,7 +36,8 @@ describe SubmitsController do
 
   describe "GET new" do
     it "assigns a new submit as @submit" do
-      get :new, {}, valid_session
+      judge = Judge.create
+      get :new, {:judge_id => judge.id}, valid_session
       assigns(:submit).should be_a_new(Submit)
     end
   end
