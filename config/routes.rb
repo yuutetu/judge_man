@@ -1,5 +1,5 @@
 JudgeMan::Application.routes.draw do
-  resources :submits
+  resources :submits, :only => [:new, :create]
 
   resources :judges, :only => [:new, :create, :show]
 
