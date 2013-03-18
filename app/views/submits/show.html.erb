@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Select item:</strong>
+  <%= @submit.select_item %>
+</p>
+
+<p>
+  <strong>Judge:</strong>
+  <%= @submit.judge %>
+</p>
+
+
+<%= link_to 'Edit', edit_submit_path(@submit) %> |
+<%= link_to 'Back', submits_path %>

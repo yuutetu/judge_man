@@ -1,0 +1,29 @@
+<h1>Listing submits</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Select item</th>
+      <th>Judge</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @submits.each do |submit| %>
+    <tr>
+      <td><%= submit.select_item %></td>
+      <td><%= submit.judge %></td>
+      <td><%= link_to 'Show', submit %></td>
+      <td><%= link_to 'Edit', edit_submit_path(submit) %></td>
+      <td><%= link_to 'Destroy', submit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Submit', new_submit_path %>
