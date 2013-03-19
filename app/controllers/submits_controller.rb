@@ -1,25 +1,9 @@
 class SubmitsController < ApplicationController
-  before_action :set_submit, only: [:show, :edit, :update, :destroy]
-
-  # GET /submits
-  # GET /submits.json
-  def index
-    @submits = Submit.all
-  end
-
-  # GET /submits/1
-  # GET /submits/1.json
-  def show
-  end
+  before_filter :filter_submit
 
   # GET /submits/new
   def new
-    @judge = Judge.find(params[:judge_id])
     @submit = Submit.new
-  end
-
-  # GET /submits/1/edit
-  def edit
   end
 
   # POST /submits
@@ -38,34 +22,21 @@ class SubmitsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /submits/1
-  # PATCH/PUT /submits/1.json
-  def update
-    respond_to do |format|
-      if @submit.update(submit_params)
-        format.html { redirect_to @submit, notice: 'Submit was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @submit.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /submits/1
-  # DELETE /submits/1.json
-  def destroy
-    @submit.destroy
-    respond_to do |format|
-      format.html { redirect_to submits_url }
-      format.json { head :no_content }
-    end
-  end
-
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_submit
-      @submit = Submit.find(params[:id])
+    def filter_submit
+      @judge = Judge.find_by_id(params[:judge_id])
+      if @judge.nil?
+        render :status => 404
+        return
+      elsif @judge.judging?
+        # success
+      elsif @judge.judged?
+        render "submits/deadline"
+        return
+      else
+        render :status => 404
+        return
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
