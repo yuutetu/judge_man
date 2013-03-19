@@ -1,11 +1,6 @@
 class JudgesController < ApplicationController
-  before_action :set_judge, only: [:show, :edit, :update, :destroy]
-
-  # GET /judges
-  # GET /judges.json
-  def index
-    @judges = Judge.all
-  end
+  before_action :filter_show_judge, only: [:show]
+  before_action :set_judge, only: [:show]
 
   # GET /judges/1
   # GET /judges/1.json
@@ -15,10 +10,6 @@ class JudgesController < ApplicationController
   # GET /judges/new
   def new
     @judge = Judge.new
-  end
-
-  # GET /judges/1/edit
-  def edit
   end
 
   # POST /judges
@@ -37,31 +28,23 @@ class JudgesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /judges/1
-  # PATCH/PUT /judges/1.json
-  def update
-    respond_to do |format|
-      if @judge.update(judge_params)
-        format.html { redirect_to @judge, notice: 'Judge was successfully updated.' }
-        format.json { head :no_content }
+  private
+    def filter_show_judge
+      @judge = Judge.find_by_id(params[:id])
+      if @judge.nil?
+        render :status => 404
+        return
+      elsif @judge.judging?
+        render "judges/wait"
+        return
+      elsif @judge.judged?
+        # success
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @judge.errors, status: :unprocessable_entity }
+        render :status => 404
+        return
       end
     end
-  end
 
-  # DELETE /judges/1
-  # DELETE /judges/1.json
-  def destroy
-    @judge.destroy
-    respond_to do |format|
-      format.html { redirect_to judges_url }
-      format.json { head :no_content }
-    end
-  end
-
-  private
     # Use callbacks to share common setup or constraints between actions.
     def set_judge
       @judge = Judge.find(params[:id])

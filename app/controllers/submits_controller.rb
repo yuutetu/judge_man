@@ -1,5 +1,5 @@
 class SubmitsController < ApplicationController
-  before_filter :filter_submit
+  before_action :filter_submit
 
   # GET /submits/new
   def new
