@@ -17,11 +17,13 @@
   </div>
   <div class="field">
     <%= f.label :select_type %><br />
-    <%= f.number_field :select_type %>
+    <%= f.radio_button :select_type, 0 %> 選択式<br />
+    <%= f.radio_button :select_type, 1 %> 記入式
   </div>
   <div class="field">
     <%= f.label :judge_type %><br />
-    <%= f.number_field :judge_type %>
+    <%= f.radio_button :judge_type, 0 %> ランダム<br />
+    <%= f.radio_button :judge_type, 1 %> 多数決重視
   </div>
   <div class="field">
     <%= f.label :judge_time %><br />
