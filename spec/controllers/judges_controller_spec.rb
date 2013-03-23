@@ -24,7 +24,7 @@ describe JudgesController do
   # Judge. As you add validations to Judge, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    { "title" => "MyString" }
+    { "title" => "MyString", "judge_type" => 0, "select_type" => 0 }
   end
 
   # This should return the minimal set of values that should be in the session
@@ -85,7 +85,8 @@ describe JudgesController do
 
       it "redirects to the created judge" do
         post :create, {:judge => valid_attributes}, valid_session
-        response.should redirect_to(Judge.last)
+        response.should_not redirect_to(Judge.last)
+        response.should render_template(:create)
       end
     end
 

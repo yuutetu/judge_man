@@ -19,7 +19,7 @@ class JudgesController < ApplicationController
 
     respond_to do |format|
       if @judge.save
-        format.html { redirect_to @judge, notice: 'Judge was successfully created.' }
+        format.html #{ redirect_to @judge, notice: 'Judge was successfully created.' }
         format.json { render action: 'show', status: :created, location: @judge }
       else
         format.html { render action: 'new' }

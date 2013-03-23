@@ -1,6 +1,6 @@
 class Judge < ActiveRecord::Base
-  validates :select_type, :include => { :with => [0, 1] }
-  validates :judge_type, :include => { :with => [0, 1] }
+  validates :select_type, :inclusion => { :in => [0, 1] }
+  validates :judge_type, :inclusion => { :in => [0, 1] }
 
 	def judging?
 		DateTime.now < self.judge_time
