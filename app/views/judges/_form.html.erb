@@ -20,6 +20,15 @@
     <%= f.radio_button :select_type, 0 %> 選択式<br />
     <%= f.radio_button :select_type, 1 %> 記入式
   </div>
+  <div class="field select_items_form">
+    <label for="judge_select_items">選択項目(カンマ区切り)</label><br />
+    <%= text_field_tag "judge[select_items]", "", :id => "judge_select_items" %>
+  </div>
+  <div class="field">
+    <%= f.label :select_type %><br />
+    <%= f.radio_button :select_type, 0 %> 選択式<br />
+    <%= f.radio_button :select_type, 1 %> 記入式
+  </div>
   <div class="field">
     <%= f.label :judge_type %><br />
     <%= f.radio_button :judge_type, 0 %> ランダム<br />
