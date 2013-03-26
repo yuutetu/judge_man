@@ -1,5 +1,6 @@
 JudgeMan::Application.routes.draw do
-  resources :judges, :only => [:new, :create, :show] do
+  root :to => "judges#new"
+  resources :judges, :only => [:create, :show] do
     resources :submits, :only => [:new, :create]
   end
 

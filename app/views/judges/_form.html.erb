@@ -17,16 +17,8 @@
   </div>
   <div class="field">
     <%= f.label :select_type %><br />
-    <%= f.radio_button :select_type, 0 %> 選択式<br />
-    <%= f.radio_button :select_type, 1 %> 記入式
-  </div>
-  <div class="field select_items_form">
-    <label for="judge_select_items">選択項目(カンマ区切り)</label><br />
-    <%= text_field_tag "judge[select_items]", "", :id => "judge_select_items" %>
-  </div>
-  <div class="field">
-    <%= f.label :select_type %><br />
-    <%= f.radio_button :select_type, 0 %> 選択式<br />
+    <%= f.radio_button :select_type, 0 %> 選択式 
+    <span id="judge_select_items_form"><%= text_field_tag "judge[select_items]", "", :id => "judge_select_items" %>(カンマ区切り)</span> <br />
     <%= f.radio_button :select_type, 1 %> 記入式
   </div>
   <div class="field">
@@ -45,4 +37,23 @@
   <div class="actions">
     <%= f.submit %>
   </div>
+  <script>
+  $(document).ready(function(){
+    $("#judge_select_items_form").hide();
+    $("#judge_select_type_0").change(function(){
+      reset_judge_select_items();
+    });
+    $("#judge_select_type_1").change(function(){
+      reset_judge_select_items();
+    });
+
+    function reset_judge_select_items(){
+      if($("#judge_select_type_0:checked").size() > 0){
+        $("#judge_select_items_form").show();
+      }else{
+        $("#judge_select_items_form").hide();
+      }
+    }
+  });
+  </script>
 <% end %>
