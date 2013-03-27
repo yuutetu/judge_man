@@ -2,6 +2,7 @@ class Judge < ActiveRecord::Base
   validates :select_type, :inclusion => { :in => [0, 1] }
   validates :judge_type, :inclusion => { :in => [0, 1] }
   has_many :select_items
+  has_many :submits
 
 	def judging?
 		DateTime.now < self.judge_time

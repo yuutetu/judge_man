@@ -1,4 +1,4 @@
-<%= form_for @submit, :url => judge_submits_path(@judge) do |f| %>
+<%= form_tag judge_submits_path(@judge) do %>
   <% if @submit.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@submit.errors.count, "error") %> prohibited this submit from being saved:</h2>
@@ -13,13 +13,13 @@
 
   <div class="field">
     <% @judge.select_items.each_with_index do |item, i| %>
-    <%= f.radio_button :select_item, i %> <%= item.title %><br />
+    <%= radio_button_tag "submit[select_item]", i %> <%= item.title %>
     <% end %>
     <% if @judge.present_etc? %>
-    <%= f.radio_button :select_item, @judge.select_items.count %> <%= f.text_field :select_item %>
+    <%= radio_button_tag "submit[select_item]", @judge.select_items.count %> <%= text_field_tag "submit[select_item_etc]" %>
     <% end %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= submit_tag %>
   </div>
 <% end %>

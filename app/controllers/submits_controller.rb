@@ -1,3 +1,5 @@
+class ParamsError < StandardError; end
+
 class SubmitsController < ApplicationController
   before_action :filter_submit
 
@@ -9,11 +11,19 @@ class SubmitsController < ApplicationController
   # POST /submits
   # POST /submits.json
   def create
-    @submit = Submit.new(submit_params)
+    if submit_params[:select_item].to_i < @judge.select_items.count
+      @submit = Submit.new(select_item: @judge.select_items[submit_params[:select_item].to_i])
+    elsif submit_params[:select_item].to_i == @judge.select_items.count
+      @judge.select_items << SelectItem.create(title: submit_params[:select_item_etc])
+      @submit = Submit.new(select_item: @judge.select_items[submit_params[:select_item].to_i])
+    else
+      raise ParamsError, "不正なパラメータです。"
+    end
 
     respond_to do |format|
       if @submit.save
-        format.html { redirect_to @submit, notice: 'Submit was successfully created.' }
+        @judge.submits << @submit
+        format.html #{ redirect_to @submit, notice: 'Submit was successfully created.' }
         format.json { render action: 'show', status: :created, location: @submit }
       else
         format.html { render action: 'new' }
@@ -41,6 +51,6 @@ class SubmitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def submit_params
-      params.require(:submit).permit()
+      params.require(:submit).permit(:select_item, :select_item_etc)
     end
 end
