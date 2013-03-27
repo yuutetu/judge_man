@@ -12,8 +12,12 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :select_item %><br />
-    <%= f.text_field :select_item %>
+    <% @judge.select_items.each_with_index do |item, i| %>
+    <%= f.radio_button :select_item, i %> <%= item.title %><br />
+    <% end %>
+    <% if @judge.present_etc? %>
+    <%= f.radio_button :select_item, @judge.select_items.count %> <%= f.text_field :select_item %>
+    <% end %>
   </div>
   <div class="actions">
     <%= f.submit %>

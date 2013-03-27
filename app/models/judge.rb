@@ -16,6 +16,10 @@ class Judge < ActiveRecord::Base
 		self.remove_time <= DateTime.now
 	end
 
+  def present_etc?
+    self.select_type == 1
+  end
+
   def select_items= st
     ar = st.split(",").delete_if{|e| e.blank?}
     super []
