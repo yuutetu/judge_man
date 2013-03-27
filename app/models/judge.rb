@@ -18,6 +18,7 @@ class Judge < ActiveRecord::Base
 
   def select_items= st
     ar = st.split(",").delete_if{|e| e.blank?}
+    super []
     ar.each do |e|
       self.select_items << (SelectItem.create :title => e)
     end
