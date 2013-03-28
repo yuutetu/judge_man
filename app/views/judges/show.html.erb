@@ -1,27 +1,2 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @judge.title %>
-</p>
-
-<p>
-  <strong>Select type:</strong>
-  <%= @judge.select_type %>
-</p>
-
-<p>
-  <strong>Judge type:</strong>
-  <%= @judge.judge_type %>
-</p>
-
-<p>
-  <strong>Judge time:</strong>
-  <%= @judge.judge_time %>
-</p>
-
-<p>
-  <strong>Remove time:</strong>
-  <%= @judge.remove_time %>
-</p>
-
+<h1>Decision!</h1>
+<p><%= @judge.title %>は、<%= @judge.result.title %>に決定しました！</p>

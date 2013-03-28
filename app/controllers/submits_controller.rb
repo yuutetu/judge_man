@@ -1,3 +1,4 @@
+#coding:utf-8
 class ParamsError < StandardError; end
 
 class SubmitsController < ApplicationController
@@ -11,6 +12,10 @@ class SubmitsController < ApplicationController
   # POST /submits
   # POST /submits.json
   def create
+    unless submit_params[:select_item].present?
+      render action: 'new'
+    end
+
     if submit_params[:select_item].to_i < @judge.select_items.count
       @submit = Submit.new(select_item: @judge.select_items[submit_params[:select_item].to_i])
     elsif submit_params[:select_item].to_i == @judge.select_items.count
@@ -36,7 +41,7 @@ class SubmitsController < ApplicationController
     def filter_submit
       @judge = Judge.find_by_id(params[:judge_id])
       if @judge.nil?
-        render :status => 404
+        render :nothing => ture, :status => 404
         return
       elsif @judge.judging?
         # success
@@ -44,13 +49,14 @@ class SubmitsController < ApplicationController
         render "submits/deadline"
         return
       else
-        render :status => 404
+        render :nothing => ture, :status => 404
         return
       end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def submit_params
+      params.merge :submit => {:select_item => ""}
       params.require(:submit).permit(:select_item, :select_item_etc)
     end
 end

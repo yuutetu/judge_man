@@ -5,6 +5,16 @@ class JudgesController < ApplicationController
   # GET /judges/1
   # GET /judges/1.json
   def show
+    # resultが無い時
+    unless @judge.result.present?
+      # submitが無いときには別のテンプレート
+      unless @judge.submits.exists?
+        render :no_submit
+        return
+      end
+      @judge.result = @judge.submits.sample.select_item
+      @judge.save
+    end
   end
 
   # GET /judges/new
@@ -32,7 +42,7 @@ class JudgesController < ApplicationController
     def filter_show_judge
       @judge = Judge.find_by_id(params[:id])
       if @judge.nil?
-        render :status => 404
+        render :nothing => true, :status => 404
         return
       elsif @judge.judging?
         render "judges/wait"
@@ -40,7 +50,7 @@ class JudgesController < ApplicationController
       elsif @judge.judged?
         # success
       else
-        render :status => 404
+        render :nothing => true, :status => 404
         return
       end
     end
