@@ -4,7 +4,7 @@ describe JudgesController do
   describe "routing" do
 
     it "routes to #new" do
-      get("/judges/new").should route_to("judges#new")
+      get("/").should route_to("judges#new")
     end
 
     it "routes to #show" do

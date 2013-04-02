@@ -41,7 +41,7 @@ class SubmitsController < ApplicationController
     def filter_submit
       @judge = Judge.find_by_id(params[:judge_id])
       if @judge.nil?
-        render :nothing => ture, :status => 404
+        render :nothing => true, :status => 404
         return
       elsif @judge.judging?
         # success
@@ -49,7 +49,7 @@ class SubmitsController < ApplicationController
         render "submits/deadline"
         return
       else
-        render :nothing => ture, :status => 404
+        render :nothing => true, :status => 404
         return
       end
     end
