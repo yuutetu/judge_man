@@ -65,6 +65,52 @@ describe SubmitsController do
   end
 
   describe "POST create" do
-    pending "実装待ち"
+    let!(:now){ DateTime.new(2013, 03, 01, 12, 00, 00) }
+    let!(:after_1h){ now + 1.hours }
+    let!(:after_2h){ now + 2.hours }
+
+    it "submitの作成に期限がある(表示系)" do
+      judge = create :judge, judge_time: after_1h, remove_time: after_2h
+      select_item = SelectItem.create title: "Title", judge: judge
+
+      DateTime.stub!(:now).and_return(now)
+      post :create, {:judge_id => judge.id, :submit => {:select_item => select_item, :select_item_etc => ""}}, valid_session
+      assigns(:submit).should eq(Submit.last)
+      response.should render_template("create")
+
+      DateTime.stub!(:now).and_return(after_1h)
+      post :create, {:judge_id => judge.id, :submit => {:select_item => select_item, :select_item_etc => ""}}, valid_session
+      response.should render_template("submits/deadline")
+
+      DateTime.stub!(:now).and_return(after_2h)
+      post :create, {:judge_id => judge.id, :submit => {:select_item => select_item, :select_item_etc => ""}}, valid_session
+      response.status.should == 404
+
+      id = judge.id
+      judge.destroy
+      DateTime.stub!(:now).and_return(now)
+      post :create, {:judge_id => id, :submit => {:select_item => select_item, :select_item_etc => ""}}, valid_session
+      response.status.should == 404
+    end
+
+    it "submitの作成に期限がある(作成系)" do
+      judge = create :judge, judge_time: after_1h, remove_time: after_2h
+      select_item = SelectItem.create title: "Title", judge: judge
+
+      DateTime.stub!(:now).and_return(now)
+      expect {
+        post :create, {:judge_id => judge.id, :submit => {:select_item => select_item, :select_item_etc => ""}}, valid_session
+      }.to change{ judge.submits.count }.by(1)
+
+      DateTime.stub!(:now).and_return(after_1h)
+      expect {
+        post :create, {:judge_id => judge.id, :submit => {:select_item => select_item, :select_item_etc => ""}}, valid_session
+      }.to_not change{ judge.submits.count }
+
+      DateTime.stub!(:now).and_return(after_2h)
+      expect {
+        post :create, {:judge_id => judge.id, :submit => {:select_item => select_item, :select_item_etc => ""}}, valid_session
+      }.to_not change{ judge.submits.count }
+    end
   end
 end
