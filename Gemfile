@@ -23,13 +23,6 @@ group :test, :development do
   gem 'factory_girl_rails'
 end
 
-group :deployment do
-  gem 'capistrano'
-  gem 'capistrano_colors'
-  gem 'capistrano-ext'
-  gem 'capistrano_rsync_with_remote_cache'
-end
-
 gem 'jquery-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -37,7 +30,6 @@ gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.0.1'
-gem 'unicorn'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
