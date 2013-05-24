@@ -1,6 +1,6 @@
 JudgeMan::Application.routes.draw do
-  root :to => "judges#new"
-  resources :judges, :only => [:create, :show] do
+  root :to => "home#index"
+  resources :judges, :only => [:create, :show, :new] do
     resources :submits, :only => [:new, :create]
   end
 
