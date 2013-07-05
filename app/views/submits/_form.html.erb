@@ -1,7 +1,7 @@
 <%= form_tag judge_submits_path(@judge) do %>
   <% if @submit.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@submit.errors.count, "error") %> prohibited this submit from being saved:</h2>
+      <h2><%= @submit.errors.count %> 件のエラーがあります</h2>
 
       <ul>
       <% @submit.errors.full_messages.each do |msg| %>

@@ -1,0 +1,21 @@
+ja:
+  activerecord:
+    models:
+      judge: 判定  #g
+      select_item: 選択項目  #g
+      submit: 提案  #g
+
+    attributes:
+      judge:
+        judge_time: 判定時間  #g
+        judge_type: 判定方法  #g
+        remove_time: 発表終了時間  #g
+        select_items: 選択項目  #g
+        select_type: 選択方法  #g
+        title: タイトル  #g
+
+      select_item:
+        title: 回答 #g
+
+      submit:
+        select_item: 回答  #g
