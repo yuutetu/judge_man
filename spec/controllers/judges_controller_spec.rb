@@ -52,26 +52,26 @@ describe JudgesController do
     it "結果画面で結果待ち画面と結果画面が切り替わる" do
       judge = create :judge, judge_time: after_1h, remove_time: after_2h
 
-      DateTime.stub!(:now).and_return(now)
+      DateTime.stub(:now).and_return(now)
       get :show, {:id => judge.id}, valid_session
       response.should render_template("judges/wait")
 
-      DateTime.stub!(:now).and_return(after_1h)
+      DateTime.stub(:now).and_return(after_1h)
       get :show, {:id => judge.id}, valid_session
       response.should render_template("no_submit")
 
-      DateTime.stub!(:now).and_return(after_1h)
+      DateTime.stub(:now).and_return(after_1h)
       add_submit(judge)
       get :show, {:id => judge.id}, valid_session
       response.should render_template("show")
 
-      DateTime.stub!(:now).and_return(after_2h)
+      DateTime.stub(:now).and_return(after_2h)
       get :show, {:id => judge.id}, valid_session
       response.status.should == 404
 
       id = judge.id
       judge.destroy
-      DateTime.stub!(:now).and_return(now)
+      DateTime.stub(:now).and_return(now)
       get :show, {:id => id}, valid_session
       response.status.should == 404
     end

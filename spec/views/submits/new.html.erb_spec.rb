@@ -4,8 +4,8 @@ describe "submits/new" do
   before(:each) do
     @judge = assign(:judge, stub_model(Judge, :id => 10))
     assign(:submit, stub_model(Submit).as_new_record)
-    @judge.stub!(:select_items).and_return([stub_model(SelectItem, :title => "test")])
-    @judge.stub!(:present_etc?).and_return(true)
+    @judge.stub(:select_items).and_return([stub_model(SelectItem, :title => "test")])
+    @judge.stub(:present_etc?).and_return(true)
   end
 
   it "renders new submit form" do
