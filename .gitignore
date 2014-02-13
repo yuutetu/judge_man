@@ -56,3 +56,6 @@ public/system/
 
 # rbenv
 .ruby-version
+
+# coverage
+coverage/*
